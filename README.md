@@ -23,6 +23,7 @@ Pour telecharger le code de ce repository il suffit d'utiliser un gesteur de dé
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot4.png)
 
 Selectionez la location du projet et puis cliquez sur _Finish_.
+
 4. Retournez à la perspective Java
 
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot5.png)
