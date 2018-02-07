@@ -40,24 +40,13 @@ public class ComputeHistogram<T extends RealType<T>> extends AbstractOp {
 
 	@Override
 	public void run() {
-//		@SuppressWarnings("unchecked")
-//		ImagePlusAdapter.wrapReal(image)
 		Histogram1d<T> histogram = (Histogram1d<T>) ops().image().histogram(image, histogramBins);
 		long maxBinValue = getMaxBinValue(histogram);
 
 		histogramImage = ImgPlus.wrap(ArrayImgs.ints(histogramBins, histogramHeight));
 
-		int binPos = 0;
-		Cursor<LongType> cursor = histogram.cursor();
-		while (cursor.hasNext()) {
-			cursor.fwd();
-			long binValue = cursor.get().get();
-			double binValueNorm = binValue / (double) maxBinValue;
-			Point p1 = new Point(binPos, histogramHeight - 1 - (int) ((histogramHeight - 1) * binValueNorm));
-			Point p2 = new Point(binPos, histogramHeight - 1);
-			drawLine(histogramImage, p1, p2, new IntType(1));
-			binPos++;
-		}
+		//Completez l'image histogramImage
+		
 	}
 
 	private long getMaxBinValue(Histogram1d<T> histogram) {

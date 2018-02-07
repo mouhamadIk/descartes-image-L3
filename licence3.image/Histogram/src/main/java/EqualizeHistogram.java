@@ -45,7 +45,7 @@ public class EqualizeHistogram<T extends RealType<T>> extends AbstractOp {
 	}
 
 	private void equalizeHistogram(T pixel, long numPixels, double maxValue, Histogram1d<T> accumulatedHistogram) {
-		pixel.setReal((accumulatedHistogram.frequency(pixel) * maxValue / (double) numPixels));
+		pixel.setReal(0/*Changez par le calcul de l'egalisation*/);
 	}
 
 }
