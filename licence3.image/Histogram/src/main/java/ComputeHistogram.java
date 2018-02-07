@@ -1,6 +1,4 @@
 import org.scijava.ItemIO;
-import org.scijava.command.Command;
-import org.scijava.command.CommandService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 import org.scijava.prefs.PrefService;
@@ -8,7 +6,6 @@ import org.scijava.prefs.PrefService;
 import net.imagej.ImgPlus;
 import net.imagej.ops.AbstractOp;
 import net.imagej.ops.Op;
-import net.imagej.ops.OpService;
 import net.imglib2.Cursor;
 import net.imglib2.Point;
 import net.imglib2.algorithm.region.BresenhamLine;

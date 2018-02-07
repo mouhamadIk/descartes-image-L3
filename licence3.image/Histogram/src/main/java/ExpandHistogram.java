@@ -8,7 +8,7 @@ import net.imagej.ops.Op;
 import net.imglib2.Cursor;
 import net.imglib2.type.numeric.RealType;
 
-@Plugin(type = Op.class, name = "Expand histogram", menuPath = "Plugins>TD 2>Expand histogram")
+@Plugin(type = Op.class, name = "expandHistogram")
 public class ExpandHistogram<T extends RealType<T>> extends AbstractOp {
 
 	@Parameter

@@ -17,9 +17,6 @@ import net.imglib2.type.numeric.real.DoubleType;
 @Plugin(type = Command.class, name = "createGradientImage", menuPath = "Plugins>TD 1>Create Gradient Image")
 public class Gradient<T extends RealType<T>> implements Command {
 
-	@Parameter
-	private OpService ops;
-
 	@Parameter(required = false)
 	private int size = 256;
 

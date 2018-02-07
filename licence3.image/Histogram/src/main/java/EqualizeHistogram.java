@@ -10,17 +10,17 @@ import net.imglib2.histogram.Histogram1d;
 import net.imglib2.type.numeric.RealType;
 import net.imglib2.type.numeric.integer.LongType;
 
-@Plugin(type = Op.class, name = "Equalize histogram", menuPath = "Plugins>TD 2>Equalize histogram")
+@Plugin(type = Op.class, name = "equalizeHistogram")
 public class EqualizeHistogram<T extends RealType<T>> extends AbstractOp {
 
 	@Parameter
 	private ImgPlus<T> image;
 
-	@Parameter(type = ItemIO.OUTPUT)
-	private ImgPlus<T> expanded;
-
 	@Parameter(required = false)
 	private int numBins = 256;
+
+	@Parameter(type = ItemIO.OUTPUT)
+	private ImgPlus<T> expanded;
 
 	@Override
 	public void run() {
@@ -45,7 +45,7 @@ public class EqualizeHistogram<T extends RealType<T>> extends AbstractOp {
 	}
 
 	private void equalizeHistogram(T pixel, long numPixels, double maxValue, Histogram1d<T> accumulatedHistogram) {
-		pixel.setReal(0/*Changez par le calcul de l'egalisation*/);
+		pixel.setReal(0/* Changez par le calcul de l'egalisation */);
 	}
 
 }
