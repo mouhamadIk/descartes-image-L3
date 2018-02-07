@@ -49,11 +49,15 @@ Pendant les séances de TD plusieurs projets seront créés. Ici, on explique la
 
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot8.png)
 
-2. Donnez un nom à votre projet et cochez "_Create a simple project_" et cliquez _Finish_.
+2. Donnez un nom à votre projet et cochez "_Create a simple project_" et cliquez _Next_.
 
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot9.png)
 
-3. Creez vos classes à l'interieur du dossier _src/main/java_
+3. Changez le mode de _Packaging_ à **pom** et cliquez _Finish_.
+
+![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot10.png)
+
+4. Creez vos classes à l'interieur du dossier _src/main/java_.
 
 Vous êtes prêt à coder!
 
