@@ -22,6 +22,6 @@ public class ExpandHistogramPlugin<T extends RealType<T>> implements Command {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void run() {
-		result = (ImgPlus<T>) ops.run("computeHistogram", image);
+		result = (ImgPlus<T>) ops.run("expandHistogram", image);
 	}
 }
