@@ -29,14 +29,14 @@ Sélectionnez la location du projet et puis cliquez sur _Finish_.
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot5.png)
 
 ## 2 Importer les projets sur Eclipse
-Pour importer les projets téléchargés on utilisera Gradle et le plugin _Buildship_ d'Eclipse.
+Pour importer les projets téléchargés on utilisera Maven sur Eclipse.
 1. Sélectionnez le menu File>Import....
-2. Dans la section Gradle sélectionnez _Existing Gradle Project_.
+2. Dans la section _Maven_ sélectionnez _Existing Maven Projects_.
 
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot6.png)
 
 3. Cliquez _Next >_.
-4. Sélectionnez la location du projet téléchargé (le dossier **descartes-image-L3**) et puis cliquez sur _Finish_.
+4. Sélectionnez la location du projet téléchargé (le dossier **license3.image**) et puis cliquez sur _Finish_.
 
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot7.png)
 
