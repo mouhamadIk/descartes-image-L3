@@ -1,17 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>fr.parisdescartes</groupId>
-    <artifactId>licence3.image</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <groupId>org.scijava</groupId>
+		<artifactId>pom-scijava</artifactId>
+		<version>16.1.0</version>
+    <relativePath />
   </parent>
   <artifactId>DrawLines</artifactId>
-  <dependencies>
-  	<dependency>
-  		<groupId>fr.parisdescartes</groupId>
-  		<artifactId>Gradient</artifactId>
-  		<version>0.0.1-SNAPSHOT</version>
-  	</dependency>
+  
+  <repositories>
+		<repository>
+			<id>imagej.public</id>
+			<url>http://maven.imagej.net/content/groups/public</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>imagej</artifactId>
+		</dependency>
   </dependencies>
-  <packaging>pom</packaging>
 </project>

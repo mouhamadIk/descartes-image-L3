@@ -74,6 +74,12 @@
 		<system>None</system>
 	</ciManagement>
 
+	<modules>
+		<module>Gradient</module>
+		<module>Histogram</module>
+		<module>DrawLines</module>
+	</modules>
+
 	<properties>
 		<java.version>1.8</java.version>
 		<main-class>license3.image.Main</main-class>
@@ -116,9 +122,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<modules>
-		<module>Gradient</module>
-		<module>Histogram</module>
-		<module>DrawLines</module>
-	</modules>
 </project>
