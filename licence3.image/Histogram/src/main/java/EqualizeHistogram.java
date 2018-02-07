@@ -10,7 +10,7 @@ import net.imglib2.histogram.Histogram1d;
 import net.imglib2.type.numeric.RealType;
 import net.imglib2.type.numeric.integer.LongType;
 
-@Plugin(type = Op.class, name = "Equalize histogram", menuPath = "Plugins>TD 2>EqualizeHistogram")
+@Plugin(type = Op.class, name = "Equalize histogram", menuPath = "Plugins>TD 2>Equalize histogram")
 public class EqualizeHistogram<T extends RealType<T>> extends AbstractOp {
 
 	@Parameter
@@ -40,8 +40,7 @@ public class EqualizeHistogram<T extends RealType<T>> extends AbstractOp {
 		Cursor<T> cursor = expanded.cursor();
 		while (cursor.hasNext()) {
 			cursor.fwd();
-			equalizeHistogram(cursor.get(), image.dimension(0) * image.dimension(1), image.getChannelMaximum(0),
-					accumulatedHistogram);
+			equalizeHistogram(cursor.get(), image.dimension(0) * image.dimension(1), 255, accumulatedHistogram);
 		}
 	}
 
