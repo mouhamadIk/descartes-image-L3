@@ -1,4 +1,6 @@
 import org.scijava.ItemIO;
+import org.scijava.command.Command;
+import org.scijava.command.CommandService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 import org.scijava.prefs.PrefService;
@@ -17,14 +19,11 @@ import net.imglib2.type.numeric.RealType;
 import net.imglib2.type.numeric.integer.IntType;
 import net.imglib2.type.numeric.integer.LongType;
 
-@Plugin(type = Op.class, menuPath = "Plugins>TD 2>Compute Histogram")
+@Plugin(type = Op.class, name = "computeHistogram")
 public class ComputeHistogram<T extends RealType<T>> extends AbstractOp {
 
 	@Parameter
 	private PrefService prefs;
-
-	@Parameter
-	private OpService ops;
 
 	@Parameter
 	private ImgPlus<T> image;
@@ -45,8 +44,8 @@ public class ComputeHistogram<T extends RealType<T>> extends AbstractOp {
 
 		histogramImage = ImgPlus.wrap(ArrayImgs.ints(histogramBins, histogramHeight));
 
-		//Completez l'image histogramImage
-		
+		// Completez l'image histogramImage
+
 	}
 
 	private long getMaxBinValue(Histogram1d<T> histogram) {

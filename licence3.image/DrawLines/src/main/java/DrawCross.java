@@ -1,12 +1,11 @@
 import java.util.Arrays;
 
 import org.scijava.ItemIO;
+import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
 import net.imagej.ImgPlus;
-import net.imagej.ops.AbstractOp;
-import net.imagej.ops.Op;
 import net.imglib2.RandomAccess;
 import net.imglib2.type.numeric.RealType;
 
@@ -15,8 +14,8 @@ import net.imglib2.type.numeric.RealType;
  * 
  * @author Daniel Felipe Gonzalez Obando
  */
-@Plugin(type = Op.class, name = "drawCross", menuPath = "Plugins>TD 1>Draw cross")
-public class DrawCross<T extends RealType<T>> extends AbstractOp {
+@Plugin(type = Command.class, name = "drawCross", menuPath = "Plugins>TD 1>Draw cross")
+public class DrawCross<T extends RealType<T>> implements Command {
 
 	@Parameter(type = ItemIO.INPUT)
 	private ImgPlus<T> image;

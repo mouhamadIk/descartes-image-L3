@@ -1,9 +1,8 @@
 import org.scijava.ItemIO;
+import org.scijava.command.Command;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
-import net.imagej.ops.AbstractOp;
-import net.imagej.ops.Op;
 import net.imagej.ops.OpService;
 import net.imglib2.Cursor;
 import net.imglib2.img.Img;
@@ -15,8 +14,8 @@ import net.imglib2.type.numeric.real.DoubleType;
  * @author Daniel Felipe Gonzalez Obando
  *
  */
-@Plugin(type = Op.class, name = "createGradientImage", menuPath = "Plugins>TD 1>Create Gradient Image")
-public class Gradient<T extends RealType<T>> extends AbstractOp {
+@Plugin(type = Command.class, name = "createGradientImage", menuPath = "Plugins>TD 1>Create Gradient Image")
+public class Gradient<T extends RealType<T>> implements Command {
 
 	@Parameter
 	private OpService ops;
