@@ -45,25 +45,15 @@ Le projet sera configuré et les dépendances seront téléchargés (ImageJ incl
 ## Différentes actions sur le projet
 ### Pour créer un nouveau sous-projet
 Pendant les séances de TD plusieurs projets seront créés. Ici, on explique la création d'un nouveau projet d'ImageJ.
-1. Créez un dossier avec le nom du projet dans le dossier **descartes-image-L3**.
+1. Faite clic droit sur le projet **licence3.image**, dans le menu Maven selectionnez New _Maven Module Project_.
 
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot8.png)
 
-3. Créez un fichier _build.gradle_ à l'intérieur du dossier du nouveaux.
+2. Donnez un nom à votre projet et cochez "_Create a simple project_" et cliquez _Finish_.
 
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot9.png)
 
-2. Créez la structure de dossiers du projet (_[nomProjet]/src/main/java/_)
-
-![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot10.png)
-
-3. Ajouter le projet dans le fichier _settings.gradle_ dans le dossier **descartes-image-L3**.
-
-![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot11.png)
-
-4. Rafraichissez le projet **descartes-image-L3** sur Eclipse.
-
-![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot12.png)
+3. Creez vos classes à l'interieur du dossier _src/main/java_
 
 Vous êtes prêt à coder!
 
