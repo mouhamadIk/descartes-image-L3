@@ -11,13 +11,13 @@
 
 	<groupId>fr.parisdescartes</groupId>
 	<artifactId>licence3.image</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>Workshop of image processing</name>
+	<version>0.0.1</version>
 	<packaging>pom</packaging>
 
-	<description>[MY-DESCRIPTION]</description>
+	<name>Workshop of image processing</name>
+	<description>Projects containing the necessary code to solve workshops assignments</description>
 	<url>https://github.com/[MY-ORG]/[MY-REPO]</url>
-	<inceptionYear>[MY-PROJECT'S-FIRST-YEAR]</inceptionYear>
+	<inceptionYear>2018</inceptionYear>
 	<organization>
 		<name>[MY-ORGANIZATION-NAME]</name>
 		<url>[MY-ORGANIZATION-WEB-SITE]</url>
@@ -74,19 +74,17 @@
 		<system>None</system>
 	</ciManagement>
 
-	<modules>
-		<module>Gradient</module>
-		<module>Histogram</module>
-		<module>DrawLines</module>
-	</modules>
-
 	<properties>
-		<java.version>1.8</java.version>
-		<main-class>license3.image.Main</main-class>
 		<package-name>[MY-PACKAGE-PREFIX]</package-name>
 		<license.licenseName>cc0</license.licenseName>
 		<license.copyrightOwners>N/A</license.copyrightOwners>
 	</properties>
+
+	<modules>
+		<module>gradient</module>
+		<module>histogram</module>
+		<module>drawLines</module>
+	</modules>
 
 	<repositories>
 		<repository>
@@ -94,32 +92,4 @@
 			<url>http://maven.imagej.net/content/groups/public</url>
 		</repository>
 	</repositories>
-
-	<dependencies>
-		<!-- ImageJ dependencies -->
-		<dependency>
-			<groupId>net.imagej</groupId>
-			<artifactId>imagej</artifactId>
-		</dependency>
-		<!-- NB: For ImageJ 1.x support. -->
-		<dependency>
-			<groupId>net.imagej</groupId>
-			<artifactId>ij</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>net.imagej</groupId>
-			<artifactId>imagej-legacy</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>net.imglib2</groupId>
-			<artifactId>imglib2-algorithm-gpl</artifactId>
-		</dependency>
-		<!-- Test dependencies -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
 </project>
