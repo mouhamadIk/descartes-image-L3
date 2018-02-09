@@ -1,21 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-
-	<parent>
-		<groupId>org.scijava</groupId>
-		<artifactId>pom-scijava</artifactId>
-		<version>16.1.0</version>
-		<relativePath />
-	</parent>
-
-	<groupId>fr.parisdescartes</groupId>
-	<artifactId>licence3.image</artifactId>
-	<version>0.0.1</version>
-	<packaging>pom</packaging>
-
-	<name>Workshop of image processing</name>
-	<description>Projects containing the necessary code to solve workshops assignments</description>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>fr.parisdescartes</groupId>
+    <artifactId>licence3.image</artifactId>
+    <version>0.0.1</version>
+  </parent>
+  
+  <artifactId>launchImageJ</artifactId>
+  <groupId>fr.parisdescartes</groupId>
+  <version>0.0.1</version>
+  
+  <name>Launch ImageJ</name>
+	<description>A Main class that launches ImageJ</description>
 	<url>https://github.com/[MY-ORG]/[MY-REPO]</url>
 	<inceptionYear>2018</inceptionYear>
 	<organization>
@@ -80,17 +77,33 @@
 		<license.copyrightOwners>N/A</license.copyrightOwners>
 	</properties>
 
-	<modules>
-		<module>gradient</module>
-		<module>histogram</module>
-		<module>drawLines</module>
-		<module>launchImageJ</module>
-	</modules>
-
 	<repositories>
 		<repository>
 			<id>imagej.public</id>
 			<url>http://maven.imagej.net/content/groups/public</url>
 		</repository>
 	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>imagej</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>fr.parisdescartes</groupId>
+			<artifactId>gradient</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.parisdescartes</groupId>
+			<artifactId>drawLines</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.parisdescartes</groupId>
+			<artifactId>histogram</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+	</dependencies>
 </project>
