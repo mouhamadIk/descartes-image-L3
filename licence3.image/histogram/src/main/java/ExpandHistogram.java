@@ -43,7 +43,7 @@ public class ExpandHistogram<T extends RealType<T>> extends AbstractOp {
 		double intensity = pixel.getRealDouble();
 		double range = maxIntensity - minIntensity;
 		double targetRange = maxLimitIntensity - minLimitIntensity;
-		double newIntensity = 0; // Changez cette ligne par le calcul de l'expansion.
+		double newIntensity = ((intensity - minIntensity) * targetRange / range) + minLimitIntensity;
 		pixel.setReal(newIntensity);
 	}
 
