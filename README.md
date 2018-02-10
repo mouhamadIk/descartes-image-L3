@@ -42,22 +42,134 @@ Pour importer les projets téléchargés on utilisera Maven sur Eclipse.
 
 Le projet sera configuré et les dépendances seront téléchargés (ImageJ inclus).
 
-## Différentes actions sur le projet
-### Pour créer un nouveau sous-projet
-Pendant les séances de TD plusieurs projets seront créés. Ici, on explique la création d'un nouveau projet d'ImageJ.
-1. Faite clic droit sur le projet **licence3.image**, dans le menu Maven selectionnez New _Maven Module Project_.
+## 3 Ouvrir les plugins développés
+Pour ouvrir les plugins développés pour ImageJ, il suffit de lancer la classe `LaunchImageJ` du projet _launchImageJ_.
 
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot8.png)
 
-2. Donnez un nom à votre projet et cochez "_Create a simple project_" et cliquez _Next_.
+Une fois lancée, ImageJ s'affichera et les plugins seront disponibles sur le menu _Plugins>TD x>Nom du plugin_.
 
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot9.png)
 
-3. Changez le mode de _Packaging_ à **pom** et cliquez _Finish_.
+## Différentes actions sur le projet
+### Pour créer un nouveau sous-projet
+Pendant les séances de TD plusieurs projets seront créés. Ici, on explique la création d'un nouveau projet d'ImageJ.
+1. Faite clic droit sur le projet **licence3.image**, dans le menu Maven sélectionnez New _Maven Module Project_.
 
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot10.png)
 
-4. Creez vos classes à l'interieur du dossier _src/main/java_.
+2. Donnez un nom à votre projet et cochez "_Create a simple project_" et cliquez _Next_.
+
+![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot11.png)
+
+3. Changez le mode de _Packaging_ à **jar** et cliquez _Finish_.
+
+![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot12.png)
+
+4. Ouvrez le fichier _pom.xml_ et changez-le de façon qu'il contient l'information suivante:
+
+Regardez bien que le nom d'artifact correspond au nom de votre nouveau projet, le reste de balises xml peuvent rester qu'elles sont présentées. Si vous voulez, donnez aussi une description au projet.
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>fr.parisdescartes</groupId>
+    <artifactId>licence3.image</artifactId>
+    <version>0.0.1</version>
+  </parent>
+  
+  <artifactId>NewProject</artifactId>
+  <groupId>fr.parisdescartes</groupId>
+  <version>0.0.1</version>
+  
+  <name>A new project</name>
+	<description>The new project descrition</description>
+	<url>https://github.com/[MY-ORG]/[MY-REPO]</url>
+	<inceptionYear>2018</inceptionYear>
+	<organization>
+		<name>[MY-ORGANIZATION-NAME]</name>
+		<url>[MY-ORGANIZATION-WEB-SITE]</url>
+	</organization>
+	<licenses>
+		<license>
+			<name>CC0 1.0 Universal License</name>
+			<url>http://creativecommons.org/publicdomain/zero/1.0/</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>[MY-GITHUB-ID]</id>
+			<name>[MY-FULL-NAME]</name>
+			<url>https://imagej.net/User:[MY-IMAGEJ-WIKI-ACCOUNT]</url>
+			<roles>
+				<!-- see https://imagej.net/Team -->
+				<role>founder</role>
+				<role>lead</role>
+				<role>developer</role>
+				<role>debugger</role>
+				<role>reviewer</role>
+				<role>support</role>
+				<role>maintainer</role>
+			</roles>
+		</developer>
+	</developers>
+	<contributors>
+		<contributor>
+			<name>None</name>
+		</contributor>
+	</contributors>
+
+	<mailingLists>
+		<mailingList>
+			<name>ImageJ Forum</name>
+			<archive>http://forum.imagej.net/</archive>
+		</mailingList>
+	</mailingLists>
+
+	<scm>
+		<connection>scm:git:git://github.com/[MY-ORG]/[MY-REPO]</connection>
+		<developerConnection>scm:git:git@github.com:[MY-ORG]/[MY-REPO]</developerConnection>
+		<tag>HEAD</tag>
+		<url>https://github.com/[MY-ORG]/[MY-REPO]</url>
+	</scm>
+	<issueManagement>
+		<system>GitHub Issues</system>
+		<url>http://github.com/[MY-ORG]/[MY-REPO]/issues</url>
+	</issueManagement>
+	<ciManagement>
+		<system>None</system>
+	</ciManagement>
+
+	<properties>
+		<package-name>[MY-PACKAGE-PREFIX]</package-name>
+		<license.licenseName>cc0</license.licenseName>
+		<license.copyrightOwners>N/A</license.copyrightOwners>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>imagej.public</id>
+			<url>http://maven.imagej.net/content/groups/public</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>imagej</artifactId>
+		</dependency>
+    <dependency>
+      <groupId>net.imglib2</groupId>
+			<artifactId>imglib2-algorithm-gpl</artifactId>
+    </dependency>
+	</dependencies>
+</project>
+```
+
+5. Créez vos classes à l'intérieur du dossier _src/main/java_.
 
 Vous êtes prêt à coder!
 
