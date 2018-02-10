@@ -5,6 +5,10 @@ Ce repository est créé avec l'objectif d'aider aux étudiants à créer leur p
 
 Le code sera documenté en anglais mais les tutoriaux seront présentés en français.
 
+Comme reference, la documentation du code d'ImageJ et d'ImgLib2 sont disponibles sur [http://javadoc.scijava.org/](http://javadoc.scijava.org/)
+
+En addition, les tutoriaux officiels d'ImageJ sont disponibles sur le repository GitHub [https://github.com/imagej/tutorials](https://github.com/imagej/tutorials)
+
 ## Installation du code
 ## 1 Télécharger le code
 Pour télécharger le code de ce repository il suffit d'utiliser un outil de gestion de code Git (ex. SmartGit ou SourceTree). Ici, L'environnement de développement Eclipse est utilisé pour télécharger le code dans le disque dur.
