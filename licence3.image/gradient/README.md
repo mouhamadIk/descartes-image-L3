@@ -1,4 +1,4 @@
-#Création d'une image avec gradient
+# Création d'une image avec gradient
 
 Ce projet contient un plugin _Gradient_ qui génère un image d'une taille donnée par l'utilisateur. Les intensités des pixels dans l'image forment un gradient diagonal.
 
