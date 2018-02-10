@@ -10,7 +10,7 @@ Comme reference, la documentation du code d'ImageJ et d'ImgLib2 sont disponibles
 En addition, les tutoriaux officiels d'ImageJ sont disponibles sur le repository GitHub [https://github.com/imagej/tutorials](https://github.com/imagej/tutorials)
 
 ## Installation du code
-## 1 Télécharger le code
+### 1 Télécharger le code
 Pour télécharger le code de ce repository il suffit d'utiliser un outil de gestion de code Git (ex. SmartGit ou SourceTree). Ici, L'environnement de développement Eclipse est utilisé pour télécharger le code dans le disque dur.
 
 1. Ouvrez Eclipse.
@@ -32,7 +32,7 @@ Sélectionnez la location du projet et puis cliquez sur _Finish_.
 
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot5.png)
 
-## 2 Importer les projets sur Eclipse
+### 2 Importer les projets sur Eclipse
 Pour importer les projets téléchargés on utilisera Maven sur Eclipse.
 1. Sélectionnez le menu File>Import....
 2. Dans la section _Maven_ sélectionnez _Existing Maven Projects_.
@@ -46,7 +46,7 @@ Pour importer les projets téléchargés on utilisera Maven sur Eclipse.
 
 Le projet sera configuré et les dépendances seront téléchargés (ImageJ inclus).
 
-## 3 Ouvrir les plugins développés
+### 3 Ouvrir les plugins développés
 Pour ouvrir les plugins développés pour ImageJ, il suffit de lancer la classe `LaunchImageJ` du projet _launchImageJ_.
 
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot8.png)
@@ -58,7 +58,7 @@ Une fois lancée, ImageJ s'affichera et les plugins seront disponibles sur le me
 ## Différentes actions sur le projet
 ### Pour créer un nouveau sous-projet
 Pendant les séances de TD plusieurs projets seront créés. Ici, on explique la création d'un nouveau projet d'ImageJ.
-1. Faite clic droit sur le projet **licence3.image**, dans le menu Maven sélectionnez New _Maven Module Project_.
+1. Faites clic droit sur le projet **licence3.image**, dans le menu Maven sélectionnez New _Maven Module Project_.
 
 ![alt text](https://raw.githubusercontent.com/danyfel80/descartes-image-L3/master/img/screenshot10.png)
 
@@ -178,4 +178,33 @@ Regardez bien que le nom d'artifact correspond au nom de votre nouveau projet, l
 Vous êtes prêt à coder!
 
 ### Inclure une dépendance dans les projets
-Prochainement... ;-)
+
+Pour include une dépendance dans vos projets maven il suffit de modifier le fichier _pom.xml_ du projet de tel façon que le repository de la dépendance est inclus :
+
+```xml
+<repositories>
+	<repository>
+		<id>imagej.public</id>
+		<url>http://maven.imagej.net/content/groups/public</url>
+	</repository>
+	<repository>
+		... chaque repository
+	</repository>
+</repositories>
+```
+
+Puis, il faut déclarer la dépendance du projet (_imglib2-algorithm-gpl_ dans l'exemple) :
+
+```xml
+<dependencies>
+	<dependency>
+		<groupId>net.imglib2</groupId>
+		<artifactId>imglib2-algorithm-gpl</artifactId>
+	</dependency>
+	<dependency>
+		... chaque dépendance
+	</dependency>
+</dependencies>
+```
+
+Finalement, sauvegardez le fichier. Eclipse détectera le changement du fichier et téléchargera les libraries necessaires dans votre projet.
