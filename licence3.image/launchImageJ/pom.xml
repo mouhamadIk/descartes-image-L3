@@ -1,17 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  
-  <parent>
-    <groupId>fr.parisdescartes</groupId>
-    <artifactId>licence3.image</artifactId>
-    <version>0.0.1</version>
-  </parent>
-  
-  <artifactId>launchImageJ</artifactId>
-  <groupId>fr.parisdescartes</groupId>
-  <version>0.0.1</version>
-  
-  <name>Launch ImageJ</name>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>fr.parisdescartes</groupId>
+		<artifactId>licence3.image</artifactId>
+		<version>0.0.1</version>
+	</parent>
+
+	<artifactId>launchImageJ</artifactId>
+	<groupId>fr.parisdescartes</groupId>
+	<version>0.0.1</version>
+
+	<name>Launch ImageJ</name>
 	<description>A Main class that launches ImageJ</description>
 	<url>https://github.com/[MY-ORG]/[MY-REPO]</url>
 	<inceptionYear>2018</inceptionYear>
@@ -89,6 +90,15 @@
 			<groupId>net.imagej</groupId>
 			<artifactId>imagej</artifactId>
 		</dependency>
+		<!-- NB: For ImageJ 1.x support. -->
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>ij</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>imagej-legacy</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>fr.parisdescartes</groupId>
@@ -108,6 +118,11 @@
 		<dependency>
 			<groupId>fr.parisdescartes</groupId>
 			<artifactId>thresholding</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>fr.parisdescartes</groupId>
+			<artifactId>projection</artifactId>
 			<version>0.0.1</version>
 		</dependency>
 	</dependencies>
