@@ -26,11 +26,11 @@ public class Crosscorrelation implements Command {
 	Dataset template;
 
 	@Parameter(type = ItemIO.OUTPUT)
-	Dataset result;
+	Dataset correlation;
 
 	@Override
 	public void run() {
-		result = computeCrossCorrelation(img, template);
+		correlation = computeCrossCorrelation(img, template);
 	}
 
 	private Dataset computeCrossCorrelation(Dataset img, Dataset template) {
@@ -42,8 +42,8 @@ public class Crosscorrelation implements Command {
 		long[] templateSize = new long[template.numDimensions()];
 		template.dimensions(templateSize);
 
-		Img<DoubleType> corr = ArrayImgs.doubles(imgSize);
-		RandomAccess<DoubleType> corrCursor = corr.randomAccess();
+		Img<DoubleType> res = ArrayImgs.doubles(imgSize);
+		RandomAccess<DoubleType> resCursor = res.randomAccess();
 
 		long[] position = new long[2];
 		for (int i = 0; i < imgSize[0]; i++) {
@@ -51,12 +51,12 @@ public class Crosscorrelation implements Command {
 			for (int j = 0; j < imgSize[1]; j++) {
 				position[1] = j;
 				imgCursor.setPosition(position);
-				corrCursor.setPosition(position);
-				corrCursor.get().set(correlate(imgCursor, imgSize, templateCursor, templateSize));
+				resCursor.setPosition(position);
+				resCursor.get().set(correlate(imgCursor, imgSize, templateCursor, templateSize));
 			}
 		}
 
-		return ds.create(corr);
+		return ds.create(res);
 	}
 
 	public double correlate(RandomAccess<? extends RealType<?>> img, long[] imgSize,
@@ -67,24 +67,18 @@ public class Crosscorrelation implements Command {
 		long[] positionTemplate = new long[] { 0, 0 };
 		long[] positionImage = new long[2];
 
+		// Completez le code
 		double sum = 0;
 		double div = templateSize[0] * templateSize[1];
-		for (long i = 0; i < templateSize[0]; i++) {
-			for (long j = 0; j < templateSize[1]; j++) {
-				positionTemplate[0] = i;
-				positionTemplate[1] = j;
-				positionImage[0] = initialPositionImage[0] + i;
-				positionImage[1] = initialPositionImage[1] + j;
 
-				if (positionImage[0] >= 0 && positionImage[1] >= 0 && positionImage[0] < imgSize[0]
-						&& positionImage[1] < imgSize[1]) {
-					template.setPosition(positionTemplate);
-					img.setPosition(positionImage);
+		// 1. pour chaque colonne du template
 
-					sum += (template.get().getRealDouble() * img.get().getRealDouble()) / div;
-				}
-			}
-		}
+		// 2. pour chaque ligne du template
+
+		// 3. on multiplie l'intensite de l'image avec l'intensité du template a la
+		// position de l'image donnee par i et j. Cette valeur doit etre normalisee
+		// par la taille de l'image (quantite de pixels). Puis on ajoute cette
+		// multiplication a la somme.
 
 		return sum;
 	}
