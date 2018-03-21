@@ -88,6 +88,8 @@
 		<module>thresholding</module>
 		<module>projection</module>
 		<module>convolution</module>
+		<module>conversion</module>
+		<module>morphology</module>
 	</modules>
 
 	<repositories>
