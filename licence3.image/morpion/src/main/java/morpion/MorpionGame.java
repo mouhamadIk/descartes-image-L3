@@ -2,11 +2,11 @@ package morpion;
 
 public class MorpionGame {
 
-	enum State {
+	public enum State {
 		NOUGHT_WIN, CROSS_WIN, DRAW, ERROR, EMPTY, NOT_END;
 	}
 
-	enum Symbol {
+	public enum Symbol {
 		NOUGHT, CROSS, UNKNOWN, EMPTY;
 	}
 
@@ -45,7 +45,7 @@ public class MorpionGame {
 	
 		if (noughtNumber > crossNumber + 1 || crossNumber > noughtNumber + 1) return State.ERROR;
 		
-		bool wonFlag = false;
+		boolean wonFlag = false;
 		Symbol wonSymbol = Symbol.UNKNOWN, s;
 		// run through rows
 		for (int i = 0; i < ROWS; i++) {
@@ -55,7 +55,7 @@ public class MorpionGame {
 			if (s == gameBoard[i][1] && s == gameBoard[i][2]) {
 				if (wonFlag)
 					return State.ERROR;
-				wonFlag = 1;
+				wonFlag = true;
 				wonSymbol = s;
 			}
 		}
@@ -67,7 +67,7 @@ public class MorpionGame {
 			if (s == gameBoard[1][j] && s == gameBoard[2][j]) {
 				if (wonFlag)
 					return State.ERROR;
-				wonFlag = 1;
+				wonFlag = true;
 				wonSymbol = s;
 			}
 		}
@@ -77,11 +77,11 @@ public class MorpionGame {
 				&& ((s == gameBoard[0][0] && s == gameBoard[2][2]) || s == gameBoard[2][0] && s == gameBoard[0][2])) {
 			if (wonFlag)
 				return State.ERROR;
-			wonFlag = 1;
+			wonFlag = true;
 			wonSymbol = s;
 		}
 
-		if (wonFlag == 0) {
+		if (wonFlag == false) {
 			if (noughtNumber + crossNumber == COLS * ROWS) {
 				return State.DRAW;
 			}
@@ -92,5 +92,6 @@ public class MorpionGame {
 			else if (wonSymbol == Symbol.CROSS)
 				return State.CROSS_WIN;
 		}
+		return null;
 	}
 }
