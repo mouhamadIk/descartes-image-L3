@@ -80,6 +80,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		output = image_thresholded;
 		
+		findSymboles(image_thresholded);
 		MorpionGame game = new MorpionGame(joueur1, joueur2, image_thresholded);
 		
 		game.printBoard();
