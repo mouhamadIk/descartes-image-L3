@@ -71,7 +71,7 @@ public class GFD {
 		for (i = 0; i < ht; i++)
 			for (j = 0; j < lg; j++) {
 				// System.out.println("img " + i + " " + j + " " + im.get(i,j));
-				if (im.get(i, j) > 240) {
+				if (im.get(i, j) < 20) {
 					bx += j;
 					by += i;
 					nb_pt++;
@@ -87,7 +87,7 @@ public class GFD {
 		float RadTMP;
 		for (i = 0; i < ht; i++)
 			for (j = 0; j < lg; j++)
-				if ((im.get(i, j)) > 200) {
+				if ((im.get(i, j)) < 50) {
 					RadTMP = (float) Math.sqrt((j - bx) * (j - bx) + (i - by) * (i - by));
 					if (RadTMP > MaxRad)
 						MaxRad = RadTMP;
@@ -112,7 +112,7 @@ public class GFD {
 			{
 				for (i = 0; i < ht; i++)
 					for (j = 0; j < lg; j++)
-						if (im.get(i, j) != 0) {
+						if (im.get(i, j) != 255) {
 							// radius=sqrt((j-bx-MaxRad)*(j-bx-MaxRad)+(i-by-MaxRad)*(i-by-MaxRad));
 							// theta = atan2f(i-by-MaxRad,j-bx-MaxRad);
 							radius = (float) Math.sqrt((j - bx) * (j - bx) + (i - by) * (i - by));

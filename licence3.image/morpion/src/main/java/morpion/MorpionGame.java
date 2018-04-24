@@ -1,5 +1,12 @@
 package morpion;
 
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+
+import ij.ImagePlus;
+import ij.blob.Blob;
+import scala.xml.dtd.EMPTY;
+
 public class MorpionGame {
 
 	public enum State {
@@ -10,31 +17,37 @@ public class MorpionGame {
 		NOUGHT, CROSS, UNKNOWN, EMPTY;
 	}
 
-	private final int ROWS = 3, COLS = 3;
+	ImagePlus img;
+	
+	private static final int ROWS = 3, COLS = 3;
 
-	private int noughtNumber;
-	private int crossNumber;
-
+	private int noughtNumber = 0;
+	private int crossNumber = 0;
+	private State gameState;
 	private Symbol[][] gameBoard = new Symbol[ROWS][COLS];
 
-	public int getNoughtNumber() {
-		return noughtNumber;
-	}
-
-	public void setNoughtNumber(int noughtNumber) {
-		this.noughtNumber = noughtNumber;
-	}
-
-	public int getCrossNumber() {
-		return crossNumber;
-	}
-
-	public void setCrossNumber(int crossNumber) {
-		this.crossNumber = crossNumber;
-	}
-
-	public Symbol[][] getGameBoard() {
-		return gameBoard;
+	MorpionGame(ArrayList<Blob> player1, ArrayList<Blob> player2, ImagePlus img ) {
+		this.img = img;
+		noughtNumber = player1.size();
+		crossNumber = player2.size();
+		for (Blob b : player1) {
+			int position = getPositionInMorpion(b.getCenterOfGravity());
+			gameBoard[position % 3][position/3] = Symbol.NOUGHT;
+		}
+		for (Blob b : player2) {
+			int position = getPositionInMorpion(b.getCenterOfGravity());
+			gameBoard[position % 3][position/3] = Symbol.CROSS;
+		}
+		
+		for (int i = 0; i < gameBoard.length; i++) {
+			Symbol[] symbols = gameBoard[i];
+			for (int j = 0; j < symbols.length; j++) {
+				Symbol symbol = symbols[j];
+				if (symbol == null) gameBoard[i][j] = Symbol.EMPTY;
+			}
+		}
+		
+		gameState = getGameState();
 	}
 
 	public void setGameBoard(Symbol[][] gameBoard) {
@@ -94,4 +107,56 @@ public class MorpionGame {
 		}
 		return null;
 	}
+	
+	/*
+	 *  0 | 1 | 2 
+     *  -----------
+     *  3 | 4 | 5 
+     *  -----------
+     *  6 | 7 | 8 
+	 * 
+	 */
+	
+    private int getPositionInMorpion(Point2D p){
+        int h = img.getHeight();
+        int w = img.getWidth();
+        return (int) (p.getX()/w + 3 * p.getY()/h);
+    }
+    
+    public void printBoard() {
+        for (int row = 0; row < ROWS; ++row) {
+           for (int col = 0; col < COLS; ++col) {
+              printCell(gameBoard[row][col]); // print each of the cells
+              if (col != COLS - 1) {
+                 System.out.print("|");   // print vertical partition
+              }
+           }
+           System.out.println();
+           if (row != ROWS - 1) {
+              System.out.println("-----------"); // print horizontal partition
+           }
+        }
+        System.out.println();
+        State state = this.gameState;
+        switch (state) {
+		case NOUGHT_WIN: System.out.println("Joueur 1 won."); break;
+		case CROSS_WIN:	 System.out.println("Joueur 2 won."); break;
+		case DRAW: System.out.println("Draw."); break;
+		case EMPTY: System.out.println("Board is empty."); break;
+		case ERROR: System.out.println("Game is not coherent."); break;
+		case NOT_END: System.out.println("Game not end"); break;
+		default: System.out.println("Game is not coherent."); break;
+		}
+    }
+   
+     /** Print a cell with the specified "content" */
+     public static void printCell(Symbol content) {
+        switch (content) {
+           case EMPTY:  System.out.print("   "); break;
+           case NOUGHT: System.out.print(" O "); break;
+           case CROSS:  System.out.print(" X "); break;
+           default: System.out.print("   "); break;
+        }
+     }
+
 }
