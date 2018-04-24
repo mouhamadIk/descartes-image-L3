@@ -85,7 +85,6 @@ public class Morpion<T extends RealType<T>> implements Command {
 		ByteProcessor pr = (ByteProcessor) imp.getProcessor().convertToByte(true);
 		BinaryProcessor binPr = new BinaryProcessor(pr);
 		binPr.skeletonize();
-		
 		return imp;
 	}
 	
