@@ -28,6 +28,8 @@ import net.imglib2.type.numeric.RealType;
 import projetL3.traitement.Blob;
 import projetL3.traitement.ManyBlobs;
 
+import java.awt.geom.Point2D;
+
 @Plugin(type = Command.class, name = "morpion", menuPath = "Plugins>Morpion")
 public class Morpion<T extends RealType<T>> implements Command {
 	private List<Blob> joueur1;
@@ -162,7 +164,10 @@ public class Morpion<T extends RealType<T>> implements Command {
 		return imp;
 	}
 
-    private static getPosition n
+    private static int getPositionInMorpion(Point2D p, ImagePlus img){
+        int h = img.getHeight();
+        int w = img.getWidth();
+        return (int) (p.getX()/h + 3 * p.getY()/w);
+    }
 	
-
 }
