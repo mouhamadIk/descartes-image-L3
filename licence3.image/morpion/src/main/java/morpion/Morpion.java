@@ -2,6 +2,7 @@ package morpion;
 
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -24,8 +25,8 @@ import ij.process.ImageConverter;
 import net.imagej.Dataset;
 import net.imagej.ops.OpService;
 import net.imglib2.type.numeric.RealType;
-import projetL3.traitement.Blob;
-import projetL3.traitement.ManyBlobs;
+import ij.blob.Blob;
+import ij.blob.ManyBlobs;
 
 @Plugin(type = Command.class, name = "morpion", menuPath = "Plugins>Morpion")
 public class Morpion<T extends RealType<T>> implements Command {
@@ -54,11 +55,11 @@ public class Morpion<T extends RealType<T>> implements Command {
 		ImagePlus image_thresholded = dupli.run(image);
 		image_thresholded.getProcessor().autoThreshold();
 
-		ImagePlus image_skeletonized = skeletonize(dupli.run(image_thresholded));
+		//ImagePlus image_skeletonized = skeletonize(dupli.run(image_thresholded));
 
-		ImagePlus image_convolved = convolve(dupli.run(image_skeletonized));
+		//ImagePlus image_convolved = convolve(dupli.run(image_skeletonized));
 
-		image_convolved.getProcessor().threshold(127);
+		//image_convolved.getProcessor().threshold(127);
 
 		Blob greaterBlob = getLargestConnectedComponants(dupli.run(image_thresholded));
 
@@ -67,12 +68,15 @@ public class Morpion<T extends RealType<T>> implements Command {
 		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);
 
 		image_grill.getProcessor().rotate(angle * 9 / 10);
+		image_thresholded.getProcessor().rotate(angle * 9 / 10);
 
-		System.out.println(greaterBlob.getCenterOfGravity());
 		System.out.println(angle);
+		
+		Point2D center = greaterBlob.getCenterOfGravity();
 		ImagePlus imp = dupli.run(image_thresholded);
+		image_thresholded.getProcessor().setRoi(greaterBlob.getOuterContourAsROI());
 
-		output = image_grill;
+		output = image_thresholded;
 	}
 
 	private ImagePlus convertInputToImagePlus() {
@@ -134,7 +138,9 @@ public class Morpion<T extends RealType<T>> implements Command {
 		for (Blob blob : manyBlobs) {
 			gfds.put(blob, new GFD(Blob.generateBlobImage(blob).getProcessor()));
 		}
-
+		
+		Kmeans kmeans = new Kmeans(3, manyBlobs);
+		
 		GFD g = gfds.get(manyBlobs.get(manyBlobs.size() - 1));
 		for (Blob b : manyBlobs) {
 			System.out.println("Mesure simi : " + g.mesureSimilarite(gfds.get(b)));
