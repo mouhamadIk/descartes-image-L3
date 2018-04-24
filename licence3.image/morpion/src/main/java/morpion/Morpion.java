@@ -144,7 +144,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 		GFD g = gfds.get(manyBlobs.get(manyBlobs.size()-1));
 		for (Blob b : manyBlobs) {
 			System.out.println("Mesure simi : " + g.mesureSimilarite(gfds.get(b)));
-			if (g.mesureSimilarite(gfds.get(b)) > 0.6) {
+			if (g.mesureSimilarite(gfds.get(b)) > 0.9) {
 				joueur1.add(b);
 			}else {
 				joueur2.add(b);
