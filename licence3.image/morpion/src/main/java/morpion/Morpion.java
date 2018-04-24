@@ -74,17 +74,18 @@ public class Morpion<T extends RealType<T>> implements Command {
 		
 		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);
 
-		MorpionGame game = new MorpionGame(joueur1, joueur2);
+		MorpionGame game = new MorpionGame(joueur1, joueur2, image_convolved);
 		
 		
-		System.out.println("joueur 1 : ");
-		for(Blob b : joueur1)
-			System.out.println(b.getCenterOfGravity());
-		System.out.println("joueur 2 : ");
-		for(Blob b : joueur2)
-			System.out.println(b.getCenterOfGravity());
+//		System.out.println("joueur 1 : ");
+//		for(Blob b : joueur1)
+//			System.out.println(b.getCenterOfGravity());
+//		System.out.println("joueur 2 : ");
+//		for(Blob b : joueur2)
+//			System.out.println(b.getCenterOfGravity());
 				
-		System.out.println(greaterBlob.getCenterOfGravity());
+//		System.out.println(greaterBlob.getCenterOfGravity());
+		game.printBoard();
 		output = image_grill;
 	}
 
