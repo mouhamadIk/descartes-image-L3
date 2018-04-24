@@ -98,10 +98,6 @@
 			<groupId>net.imagej</groupId>
 			<artifactId>imagej-legacy</artifactId>
 		</dependency>
-<<<<<<< HEAD
-=======
-		
->>>>>>> 7bab725504eefbf747335c25387c140e575fdec0
 		<dependency>
 			<groupId>de.biomedical-imaging.ij</groupId>
 			<artifactId>ij_blob</artifactId>
