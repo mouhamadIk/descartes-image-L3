@@ -1,5 +1,11 @@
 package morpion;
 
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+
+import ij.ImagePlus;
+import ij.blob.Blob;
+
 public class MorpionGame {
 
 	public enum State {
@@ -10,31 +16,26 @@ public class MorpionGame {
 		NOUGHT, CROSS, UNKNOWN, EMPTY;
 	}
 
+	ImagePlus img;
+	
 	private final int ROWS = 3, COLS = 3;
 
-	private int noughtNumber;
-	private int crossNumber;
+	private int noughtNumber = 0;
+	private int crossNumber = 0;
 
 	private Symbol[][] gameBoard = new Symbol[ROWS][COLS];
 
-	public int getNoughtNumber() {
-		return noughtNumber;
-	}
-
-	public void setNoughtNumber(int noughtNumber) {
-		this.noughtNumber = noughtNumber;
-	}
-
-	public int getCrossNumber() {
-		return crossNumber;
-	}
-
-	public void setCrossNumber(int crossNumber) {
-		this.crossNumber = crossNumber;
-	}
-
-	public Symbol[][] getGameBoard() {
-		return gameBoard;
+	MorpionGame(ArrayList<Blob> player1, ArrayList<Blob> player2 ) {
+		noughtNumber = player1.size();
+		crossNumber = player2.size();
+		for (Blob b : player1) {
+			int position = getPositionInMorpion(b.getCenterOfGravity());
+			gameBoard[position % 3][position/3] = Symbol.NOUGHT;
+		}
+		for (Blob b : player2) {
+			int position = getPositionInMorpion(b.getCenterOfGravity());
+			gameBoard[position % 3][position/3] = Symbol.CROSS;
+		}
 	}
 
 	public void setGameBoard(Symbol[][] gameBoard) {
@@ -94,4 +95,13 @@ public class MorpionGame {
 		}
 		return null;
 	}
+	
+    private int getPositionInMorpion(Point2D p){
+        int h = img.getHeight();
+        int w = img.getWidth();
+        return (int) (p.getX()/h + 3 * p.getY()/w);
+    }
+    
+
+
 }

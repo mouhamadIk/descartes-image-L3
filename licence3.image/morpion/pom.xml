@@ -98,6 +98,12 @@
 			<groupId>net.imagej</groupId>
 			<artifactId>imagej-legacy</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>de.biomedical-imaging.ij</groupId>
+			<artifactId>ij_blob</artifactId>
+			<version>1.4.10-SNAPSHOT</version>
+		</dependency>
 
 	</dependencies>
 </project>

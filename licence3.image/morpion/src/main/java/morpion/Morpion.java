@@ -1,13 +1,11 @@
 package morpion;
 
-import java.awt.Point;
-import java.awt.Polygon;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 
 import org.scijava.ItemIO;
 import org.scijava.command.Command;
@@ -16,8 +14,9 @@ import org.scijava.convert.ConvertService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 
-import descripteur.GFD;
 import ij.ImagePlus;
+import ij.blob.Blob;
+import ij.blob.ManyBlobs;
 import ij.plugin.Duplicator;
 import ij.process.BinaryProcessor;
 import ij.process.ByteProcessor;
@@ -25,15 +24,11 @@ import ij.process.ImageConverter;
 import net.imagej.Dataset;
 import net.imagej.ops.OpService;
 import net.imglib2.type.numeric.RealType;
-import projetL3.traitement.Blob;
-import projetL3.traitement.ManyBlobs;
-
-import java.awt.geom.Point2D;
 
 @Plugin(type = Command.class, name = "morpion", menuPath = "Plugins>Morpion")
 public class Morpion<T extends RealType<T>> implements Command {
-	private List<Blob> joueur1;
-	private List<Blob> joueur2;
+	private ArrayList<Blob> joueur1;
+	private ArrayList<Blob> joueur2;
 	@Parameter
 	CommandService cs;
 
@@ -79,6 +74,9 @@ public class Morpion<T extends RealType<T>> implements Command {
 		
 		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);
 
+		MorpionGame game = new MorpionGame(joueur1, joueur2);
+		
+		
 		System.out.println("joueur 1 : ");
 		for(Blob b : joueur1)
 			System.out.println(b.getCenterOfGravity());
@@ -164,10 +162,6 @@ public class Morpion<T extends RealType<T>> implements Command {
 		return imp;
 	}
 
-    private static int getPositionInMorpion(Point2D p, ImagePlus img){
-        int h = img.getHeight();
-        int w = img.getWidth();
-        return (int) (p.getX()/h + 3 * p.getY()/w);
-    }
+
 	
 }
