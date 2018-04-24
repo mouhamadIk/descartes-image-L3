@@ -1,5 +1,7 @@
 package morpion;
 
+import java.util.ArrayList;
+
 import org.scijava.ItemIO;
 import org.scijava.command.Command;
 import org.scijava.command.CommandService;
@@ -62,15 +64,18 @@ public class Morpion<T extends RealType<T>> implements Command {
 		image_thresholded.getProcessor().autoThreshold();
 		
 		
-		//ImagePlus image_skeletonized = skeletonize(dupli.run(image_thresholded));
+		ImagePlus image_skeletonized = skeletonize(dupli.run(image_thresholded));
 		
-		//ImagePlus image_convolved = convolve(dupli.run(image_skeletonized));
+		ImagePlus image_convolved = convolve(dupli.run(image_skeletonized));
 		
-		//image_convolved.getProcessor().threshold(127);
+		image_convolved.getProcessor().threshold(127);
 		
-		ImagePlus image_grille = getLargestConnectedComponants(dupli.run(image_thresholded));
+		Blob greaterBlob = getLargestConnectedComponants(dupli.run(image_thresholded));
 		
-		output = image_grille;
+		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);
+				
+		System.out.println(greaterBlob.getCenterOfGravity());
+		output = image_grill;
 	}
 
 	private ImagePlus convertInputToImagePlus() {
@@ -97,7 +102,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 		return imp;
 	}
 	
-	private ImagePlus getLargestConnectedComponants(ImagePlus imp) {
+	private Blob getLargestConnectedComponants(ImagePlus imp) {
 		ManyBlobs manyBlobs = new ManyBlobs(imp);
 		manyBlobs.findConnectedComponents();
 		System.out.println(manyBlobs.size());
@@ -106,9 +111,8 @@ public class Morpion<T extends RealType<T>> implements Command {
 			if (greaterBlob.getPerimeter() < blob.getPerimeter())
 				greaterBlob = blob;
 		}
-		imp = Blob.generateBlobImage(greaterBlob);
 		
-		return imp;
+		return greaterBlob;
 	}
 	
 	private ImagePlus getLines(ImagePlus imp) {
@@ -119,7 +123,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 		
 		return imp;
 	}
-
+	
 //	@Override
 //	public void run() {
 //		ImagePlus imp = convertInputToImagePlus();
