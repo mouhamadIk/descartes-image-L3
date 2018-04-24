@@ -1,5 +1,10 @@
 package morpion;
 
+<<<<<<< HEAD
+import java.awt.Point;
+import java.awt.Polygon;
+=======
+>>>>>>> 7bab725504eefbf747335c25387c140e575fdec0
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,6 +29,11 @@ import ij.process.ImageConverter;
 import net.imagej.Dataset;
 import net.imagej.ops.OpService;
 import net.imglib2.type.numeric.RealType;
+<<<<<<< HEAD
+import ij.blob.Blob;
+import ij.blob.ManyBlobs;
+=======
+>>>>>>> 7bab725504eefbf747335c25387c140e575fdec0
 
 @Plugin(type = Command.class, name = "morpion", menuPath = "Plugins>Morpion")
 public class Morpion<T extends RealType<T>> implements Command {
@@ -34,18 +44,6 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 	@Parameter
 	OpService ops;
-
-	// @Parameter(persist = false)
-	// ImgPlus<T> image;
-
-	// @Parameter(required = false)
-	// int threshold = 80;
-
-	// @Parameter(type = ItemIO.INPUT)
-	// private ImgPlus<T> img;
-
-	// @Parameter(type = ItemIO.OUTPUT)
-	// ImgPlus<T> imageConv;
 
 	@Parameter
 	ConvertService conv;
@@ -63,17 +61,31 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		ImagePlus image_thresholded = dupli.run(image);
 		image_thresholded.getProcessor().autoThreshold();
-		
-		ImagePlus image_skeletonized = skeletonize(dupli.run(image_thresholded));
-		
-		ImagePlus image_convolved = convolve(dupli.run(image_skeletonized));
-		
-		image_convolved.getProcessor().threshold(127);
-		
+
+		//ImagePlus image_skeletonized = skeletonize(dupli.run(image_thresholded));
+
+		//ImagePlus image_convolved = convolve(dupli.run(image_skeletonized));
+
+		//image_convolved.getProcessor().threshold(127);
+
 		Blob greaterBlob = getLargestConnectedComponants(dupli.run(image_thresholded));
-		
+
+		double angle = greaterBlob.getOrientationMajorAxis();
+
 		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);
 
+<<<<<<< HEAD
+		image_grill.getProcessor().rotate(angle * 9 / 10);
+		image_thresholded.getProcessor().rotate(angle * 9 / 10);
+
+		System.out.println(angle);
+		
+		Point2D center = greaterBlob.getCenterOfGravity();
+		ImagePlus imp = dupli.run(image_thresholded);
+		image_thresholded.getProcessor().setRoi(greaterBlob.getOuterContourAsROI());
+
+		output = image_thresholded;
+=======
 		MorpionGame game = new MorpionGame(joueur1, joueur2, image_convolved);
 		
 		
@@ -87,6 +99,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 //		System.out.println(greaterBlob.getCenterOfGravity());
 		game.printBoard();
 		output = image_grill;
+>>>>>>> 7bab725504eefbf747335c25387c140e575fdec0
 	}
 
 	private ImagePlus convertInputToImagePlus() {
@@ -113,8 +126,22 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		return imp;
 	}
-	
+
 	private Blob getLargestConnectedComponants(ImagePlus imp) {
+		ManyBlobs manyBlobs = new ManyBlobs(imp);
+		manyBlobs.findConnectedComponents();
+		Blob greaterBlob = manyBlobs.get(0);
+
+		for (Blob blob : manyBlobs) {
+			if (blob.getPerimeter() > greaterBlob.getPerimeter()) {
+				greaterBlob = blob;
+			}
+		}
+
+		return greaterBlob;
+	}
+
+	private void findSymboles(ImagePlus imp) {
 		ManyBlobs manyBlobs = new ManyBlobs(imp);
 		manyBlobs.findConnectedComponents();
 		joueur1 = new ArrayList<>();
@@ -122,9 +149,6 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		manyBlobs = manyBlobs.filterBlobs(20, Blob.GETPERIMETER);
 
-		System.out.println(manyBlobs.size());
-
-		Blob greaterBlob = manyBlobs.get(0);
 		manyBlobs.sort(new Comparator<Blob>() {
 			@Override
 			public int compare(Blob b1, Blob b2) {
@@ -133,36 +157,37 @@ public class Morpion<T extends RealType<T>> implements Command {
 			}
 		});
 
-		greaterBlob = manyBlobs.get(manyBlobs.size() - 1);
-		
-		manyBlobs.remove(greaterBlob);
 		Map<Blob, GFD> gfds = new HashMap<>();
 		for (Blob blob : manyBlobs) {
 			gfds.put(blob, new GFD(Blob.generateBlobImage(blob).getProcessor()));
 		}
-
-		GFD g = gfds.get(manyBlobs.get(manyBlobs.size()-1));
+		
+		Kmeans kmeans = new Kmeans(3, manyBlobs);
+		
+		GFD g = gfds.get(manyBlobs.get(manyBlobs.size() - 1));
 		for (Blob b : manyBlobs) {
 			System.out.println("Mesure simi : " + g.mesureSimilarite(gfds.get(b)));
 			if (g.mesureSimilarite(gfds.get(b)) > 0.9) {
 				joueur1.add(b);
-			}else {
+			} else {
 				joueur2.add(b);
 			}
 		}
-		
-		return greaterBlob;
 	}
 
-	private ImagePlus getLines(ImagePlus imp) {
-		ByteProcessor pr = (ByteProcessor) imp.getProcessor().convertToByte(true);
-		int[] kernel = { 1, 0, -1, 2, 0, -2, 1, 0, -1 };
-		BinaryProcessor binPr = new BinaryProcessor(pr);
-		binPr.convolve3x3(kernel);
+<<<<<<< HEAD
+	// private ImagePlus getLines(ImagePlus imp) {
+	// ByteProcessor pr = (ByteProcessor) imp.getProcessor().convertToByte(true);
+	// int[] kernel = { 1, 0, -1, 2, 0, -2, 1, 0, -1 };
+	// BinaryProcessor binPr = new BinaryProcessor(pr);
+	// binPr.convolve3x3(kernel);
+	//
+	// return imp;
+	// }
 
-		return imp;
-	}
-
+}
+=======
 
 	
 }
+>>>>>>> 7bab725504eefbf747335c25387c140e575fdec0
