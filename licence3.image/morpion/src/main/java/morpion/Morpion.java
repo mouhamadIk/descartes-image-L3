@@ -1,10 +1,7 @@
 package morpion;
 
-<<<<<<< HEAD
 import java.awt.Point;
 import java.awt.Polygon;
-=======
->>>>>>> 7bab725504eefbf747335c25387c140e575fdec0
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,11 +26,6 @@ import ij.process.ImageConverter;
 import net.imagej.Dataset;
 import net.imagej.ops.OpService;
 import net.imglib2.type.numeric.RealType;
-<<<<<<< HEAD
-import ij.blob.Blob;
-import ij.blob.ManyBlobs;
-=======
->>>>>>> 7bab725504eefbf747335c25387c140e575fdec0
 
 @Plugin(type = Command.class, name = "morpion", menuPath = "Plugins>Morpion")
 public class Morpion<T extends RealType<T>> implements Command {
@@ -74,7 +66,6 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);
 
-<<<<<<< HEAD
 		image_grill.getProcessor().rotate(angle * 9 / 10);
 		image_thresholded.getProcessor().rotate(angle * 9 / 10);
 
@@ -85,21 +76,10 @@ public class Morpion<T extends RealType<T>> implements Command {
 		image_thresholded.getProcessor().setRoi(greaterBlob.getOuterContourAsROI());
 
 		output = image_thresholded;
-=======
-		MorpionGame game = new MorpionGame(joueur1, joueur2, image_convolved);
+		MorpionGame game = new MorpionGame(joueur1, joueur2, image_thresholded);
 		
-		
-//		System.out.println("joueur 1 : ");
-//		for(Blob b : joueur1)
-//			System.out.println(b.getCenterOfGravity());
-//		System.out.println("joueur 2 : ");
-//		for(Blob b : joueur2)
-//			System.out.println(b.getCenterOfGravity());
-				
-//		System.out.println(greaterBlob.getCenterOfGravity());
 		game.printBoard();
 		output = image_grill;
->>>>>>> 7bab725504eefbf747335c25387c140e575fdec0
 	}
 
 	private ImagePlus convertInputToImagePlus() {
@@ -175,19 +155,6 @@ public class Morpion<T extends RealType<T>> implements Command {
 		}
 	}
 
-<<<<<<< HEAD
-	// private ImagePlus getLines(ImagePlus imp) {
-	// ByteProcessor pr = (ByteProcessor) imp.getProcessor().convertToByte(true);
-	// int[] kernel = { 1, 0, -1, 2, 0, -2, 1, 0, -1 };
-	// BinaryProcessor binPr = new BinaryProcessor(pr);
-	// binPr.convolve3x3(kernel);
-	//
-	// return imp;
-	// }
-
-}
-=======
 
 	
 }
->>>>>>> 7bab725504eefbf747335c25387c140e575fdec0
