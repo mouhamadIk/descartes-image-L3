@@ -26,8 +26,11 @@ import ij.process.ImageConverter;
 import net.imagej.Dataset;
 import net.imagej.ops.OpService;
 import net.imglib2.type.numeric.RealType;
+import ij.blob.Blob;
+import ij.blob.ManyBlobs;
 
-@Plugin(type = Command.class, name = "morpion", menuPath = "Plugins>Morpion")
+@Plugin(type=Command.class,name="morpion",menuPath="Plugins>Morpion")
+
 public class Morpion<T extends RealType<T>> implements Command {
 	private ArrayList<Blob> joueur1;
 	private ArrayList<Blob> joueur2;
@@ -79,7 +82,6 @@ public class Morpion<T extends RealType<T>> implements Command {
 		MorpionGame game = new MorpionGame(joueur1, joueur2, image_convolved);
 		
 		game.printBoard();
-		//output = image_grill;
 	}
 
 	private ImagePlus convertInputToImagePlus() {
@@ -141,9 +143,9 @@ public class Morpion<T extends RealType<T>> implements Command {
 		for (Blob blob : manyBlobs) {
 			gfds.put(blob, new GFD(Blob.generateBlobImage(blob).getProcessor()));
 		}
-		
+
 		Kmeans kmeans = new Kmeans(3, manyBlobs);
-		
+
 		GFD g = gfds.get(manyBlobs.get(manyBlobs.size() - 1));
 		
 		for (Blob b : manyBlobs) {
@@ -156,6 +158,12 @@ public class Morpion<T extends RealType<T>> implements Command {
 		}
 	}
 
-
-	
+	// private ImagePlus getLines(ImagePlus imp) {
+	// ByteProcessor pr = (ByteProcessor) imp.getProcessor().convertToByte(true);
+	// int[] kernel = { 1, 0, -1, 2, 0, -2, 1, 0, -1 };
+	// BinaryProcessor binPr = new BinaryProcessor(pr);
+	// binPr.convolve3x3(kernel);
+	//
+	// return imp;
+	// }
 }
