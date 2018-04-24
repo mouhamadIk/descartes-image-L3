@@ -1,4 +1,4 @@
-package descripteur;
+package morpion;
 
 import ij.process.ImageProcessor;
 
