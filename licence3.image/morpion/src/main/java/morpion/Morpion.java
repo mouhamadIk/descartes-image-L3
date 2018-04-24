@@ -58,7 +58,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		//ImagePlus image_convolved = convolve(dupli.run(image_skeletonized));
 
-		//image_convolved.getProcessor().threshold(127);
+		image_convolved.getProcessor().threshold(127);
 
 		Blob greaterBlob = getLargestConnectedComponants(dupli.run(image_thresholded));
 
@@ -76,10 +76,10 @@ public class Morpion<T extends RealType<T>> implements Command {
 		image_thresholded.getProcessor().setRoi(greaterBlob.getOuterContourAsROI());
 
 		output = image_thresholded;
-		MorpionGame game = new MorpionGame(joueur1, joueur2, image_thresholded);
+		MorpionGame game = new MorpionGame(joueur1, joueur2, image_convolved);
 		
 		game.printBoard();
-		output = image_grill;
+		//output = image_grill;
 	}
 
 	private ImagePlus convertInputToImagePlus() {
@@ -145,6 +145,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 		Kmeans kmeans = new Kmeans(3, manyBlobs);
 		
 		GFD g = gfds.get(manyBlobs.get(manyBlobs.size() - 1));
+		
 		for (Blob b : manyBlobs) {
 			System.out.println("Mesure simi : " + g.mesureSimilarite(gfds.get(b)));
 			if (g.mesureSimilarite(gfds.get(b)) > 0.9) {
