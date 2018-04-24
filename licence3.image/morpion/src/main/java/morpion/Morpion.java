@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 import org.scijava.ItemIO;
 import org.scijava.command.Command;
@@ -65,21 +66,26 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		ImagePlus image_thresholded = dupli.run(image);
 		image_thresholded.getProcessor().autoThreshold();
+		
+		ImagePlus image_skeletonized = skeletonize(dupli.run(image_thresholded));
+		
+		ImagePlus image_convolved = convolve(dupli.run(image_skeletonized));
+		
+		image_convolved.getProcessor().threshold(127);
+		
+		Blob greaterBlob = getLargestConnectedComponants(dupli.run(image_thresholded));
+		
+		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);
 
-		// ImagePlus image_skeletonized = skeletonize(dupli.run(image_thresholded));
-
-		// ImagePlus image_convolved = convolve(dupli.run(image_skeletonized));
-
-		// image_convolved.getProcessor().threshold(127);
-
-		ImagePlus image_grille = getLargestConnectedComponants(dupli.run(image_thresholded));
 		System.out.println("joueur 1 : ");
 		for(Blob b : joueur1)
 			System.out.println(b.getCenterOfGravity());
 		System.out.println("joueur 2 : ");
 		for(Blob b : joueur2)
 			System.out.println(b.getCenterOfGravity());
-		output = image_grille;
+				
+		System.out.println(greaterBlob.getCenterOfGravity());
+		output = image_grill;
 	}
 
 	private ImagePlus convertInputToImagePlus() {
@@ -106,9 +112,8 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		return imp;
 	}
-
-	private ImagePlus getLargestConnectedComponants(ImagePlus imp) {
-		
+	
+	private Blob getLargestConnectedComponants(ImagePlus imp) {
 		ManyBlobs manyBlobs = new ManyBlobs(imp);
 		manyBlobs.findConnectedComponents();
 		joueur1 = new ArrayList<>();
@@ -144,9 +149,8 @@ public class Morpion<T extends RealType<T>> implements Command {
 				joueur2.add(b);
 			}
 		}
-		imp = Blob.generateBlobImage(greaterBlob);
-
-		return imp;
+		
+		return greaterBlob;
 	}
 
 	private ImagePlus getLines(ImagePlus imp) {
@@ -159,22 +163,6 @@ public class Morpion<T extends RealType<T>> implements Command {
 	}
 
     private static getPosition n
-
-	// @Override
-	// public void run() {
-	// ImagePlus imp = convertInputToImagePlus();
-	// ops.convert().int8(image);
-	// ops.threshold().huang(image);
-	// imageConv = image.copy();
-	//
-	// //cs.run("morpion", true, "image", image, "threshold", 80);
-	//
-	// //Threshold<T> t = new Threshold<>(image);
-	// //imageConv = t.binarisation(threshold);
-	// //Binarisation b = new Binarisation(imageConv.getProcessor());
-	// //ImageProcessor ip = b.binariserImageAuto();
-	// //GFD gfd = new GFD(ip);
-	//
-	// }
+	
 
 }
