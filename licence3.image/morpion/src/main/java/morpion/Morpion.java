@@ -44,7 +44,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 	@Parameter(type = ItemIO.OUTPUT)
 	ImagePlus output1;
-	
+
 	@Parameter(type = ItemIO.OUTPUT)
 	ImagePlus output2;
 
@@ -55,27 +55,27 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		ImagePlus image_thresholded = dupli.run(image);
 		image_thresholded.getProcessor().autoThreshold();
-		
+
 		Blob greaterBlob = getLargestConnectedComponants(dupli.run(image_thresholded));
-		
-//		double angle = greaterBlob.getOrientationMajorAxis();
-//		image_grill.getProcessor().rotate((angle)%180);
-//		image_thresholded.getProcessor().rotate((angle)%180);
-		
+
+		// double angle = greaterBlob.getOrientationMajorAxis();
+		// image_grill.getProcessor().rotate((angle)%180);
+		// image_thresholded.getProcessor().rotate((angle)%180);
+
 		ImagePlus imp = getSubImage(dupli.run(image_thresholded), greaterBlob);
-		
+
 		findSymboles(imp);
 
 		ImagePlus image_skeletonized = skeletonize(dupli.run(imp));
 
 		ImagePlus image_convolved = convolve(dupli.run(image_skeletonized));
 
-		image_convolved.getProcessor().threshold(127);		
-		MorpionGame game = new MorpionGame(joueur1, joueur2, unknown, image_convolved);
-		
+		image_convolved.getProcessor().threshold(127);
 		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);
 
+		MorpionGame game = new MorpionGame(joueur1, joueur2, unknown, image_convolved);
 		game.printBoard();
+
 		output1 = image_grill;
 		output2 = imp;
 	}
@@ -104,7 +104,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		return imp;
 	}
-	
+
 	private Blob getLargestConnectedComponants(ImagePlus imp) {
 		ManyBlobs manyBlobs = new ManyBlobs(imp);
 		manyBlobs.findConnectedComponents();
@@ -118,28 +118,28 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		return greaterBlob;
 	}
-	
+
 	private ImagePlus getSubImage(ImagePlus imp, Blob greaterBlob) {
 		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);
-		
+
 		int width = image_grill.getWidth();
 		int height = image_grill.getHeight();
-		
+
 		Point2D center = greaterBlob.getCenterOfGravity();
-		int w = (int) (center.getX() - width/2);
-		int h = (int) (center.getY() - height/2);
+		int w = (int) (center.getX() - width / 2);
+		int h = (int) (center.getY() - height / 2);
 		ImageProcessor ipsub = imp.getProcessor().createProcessor(width, height);
 		ImageProcessor ip = imp.getProcessor();
-		
+
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				int val = ip.getPixel(w + i,h + j);
+				int val = ip.getPixel(w + i, h + j);
 				ipsub.putPixel(i, j, val);
 			}
 		}
 		imp.setProcessor(ipsub);
 		return imp;
-		
+
 	}
 
 	private void findSymboles(ImagePlus imp) {
@@ -158,7 +158,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 			}
 		});
 
-		manyBlobs.remove(manyBlobs.size()-1);
+		manyBlobs.remove(manyBlobs.size() - 1);
 		Map<Blob, GFD> gfds = new HashMap<>();
 		for (Blob blob : manyBlobs) {
 			gfds.put(blob, new GFD(Blob.generateBlobImage(blob).getProcessor()));
@@ -185,7 +185,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 		// }
 		//
 		// }
-//		GFD g = gfds.get(manyBlobs.get(manyBlobs.size() - 1));
+		// GFD g = gfds.get(manyBlobs.get(manyBlobs.size() - 1));
 
 		// Sort by Thinnes Ratio
 		manyBlobs.sort(new Comparator<Blob>() {
@@ -195,14 +195,14 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 			}
 		});
-		
+
 		ArrayList<ManyBlobs> arr = jenksNaturalBreakByThinnesRatio(manyBlobs);
 
-//		for (Blob b : manyBlobs) {
-//			System.out.println("Mesure simi : " + b.getThinnesRatio());
-//		}		
-			joueur1 = arr.get(0);
-			joueur2 = arr.get(1);
+		// for (Blob b : manyBlobs) {
+		// System.out.println("Mesure simi : " + b.getThinnesRatio());
+		// }
+		joueur1 = arr.get(0);
+		joueur2 = arr.get(1);
 	}
 
 	private static ArrayList<ManyBlobs> jenksNaturalBreakByThinnesRatio(ManyBlobs mb) {

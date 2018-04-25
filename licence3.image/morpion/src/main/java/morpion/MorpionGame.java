@@ -63,21 +63,15 @@ public class MorpionGame {
 			e.printStackTrace();
 		}
 		System.out.println(img.getHeight() + " " + img.getWidth());
-		noughtNumber = player1.size();
-		try {
-			fis.write((noughtNumber + ";").getBytes());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		crossNumber = player2.size();
-		try {
-			fis.write((crossNumber + ";").getBytes());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		if (player1 != null) {
+			noughtNumber = player1.size();
+			try {
+				fis.write((noughtNumber + ";").getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			for (Blob b : player1) {
 				int position = getPositionInMorpion(b.getCenterOfGravity());
 				gameBoard[position / 3][position % 3] = Symbol.NOUGHT;
@@ -87,8 +81,24 @@ public class MorpionGame {
 
 				System.out.println();
 			}
+		}else {
+			try {
+				fis.write((0 + ";").getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		if (player2 != null) {
+
+			crossNumber = player2.size();
+			try {
+				fis.write((crossNumber + ";").getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			for (Blob b : player2) {
 				int position = getPositionInMorpion(b.getCenterOfGravity());
 				System.out.print("coord : " + b.getCenterOfGravity() + ", position = " + position + " ~ ["
@@ -96,6 +106,13 @@ public class MorpionGame {
 				printCell(Symbol.CROSS);
 				System.out.println();
 				gameBoard[position / 3][position % 3] = Symbol.CROSS;
+			}
+		}else {
+			try {
+				fis.write((0 + ";").getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 		if (unknown != null) {
