@@ -21,6 +21,7 @@ import ij.plugin.Duplicator;
 import ij.process.BinaryProcessor;
 import ij.process.ByteProcessor;
 import ij.process.ImageConverter;
+import ij.process.ImageProcessor;
 import net.imagej.Dataset;
 import net.imagej.ops.OpService;
 import net.imglib2.type.numeric.RealType;
@@ -64,27 +65,27 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		ImagePlus image_thresholded = dupli.run(image);
 		image_thresholded.getProcessor().autoThreshold();
+		
+		Blob greaterBlob = getLargestConnectedComponants(dupli.run(image_thresholded));
+		
+//		double angle = greaterBlob.getOrientationMajorAxis();
+//		image_grill.getProcessor().rotate((angle)%180);
+//		image_thresholded.getProcessor().rotate((angle)%180);
+		
+		ImagePlus imp = getSubImage(dupli.run(image_thresholded), greaterBlob);
+		
+		findSymboles(imp);
 
-		ImagePlus image_skeletonized = skeletonize(dupli.run(image_thresholded));
+		ImagePlus image_skeletonized = skeletonize(dupli.run(imp));
 
 		ImagePlus image_convolved = convolve(dupli.run(image_skeletonized));
 
-		image_convolved.getProcessor().threshold(127);
-
-		Blob greaterBlob = getLargestConnectedComponants(dupli.run(image_thresholded));
+		image_convolved.getProcessor().threshold(127);		
 
 		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);
 
 		MorpionGame game = new MorpionGame(joueur1, joueur2, unknown, image_convolved);
 
-		// System.out.println("joueur 1 : ");
-		// for(Blob b : joueur1)
-		// System.out.println(b.getCenterOfGravity());
-		// System.out.println("joueur 2 : ");
-		// for(Blob b : joueur2)
-		// System.out.println(b.getCenterOfGravity());
-
-		// System.out.println(greaterBlob.getCenterOfGravity());
 		game.printBoard();
 		output = image_grill;
 	}
@@ -113,8 +114,48 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		return imp;
 	}
-
+	
 	private Blob getLargestConnectedComponants(ImagePlus imp) {
+		ManyBlobs manyBlobs = new ManyBlobs(imp);
+		manyBlobs.findConnectedComponents();
+		Blob greaterBlob = manyBlobs.get(0);
+
+		for (Blob blob : manyBlobs) {
+			if (blob.getPerimeter() > greaterBlob.getPerimeter()) {
+				greaterBlob = blob;
+			}
+		}
+
+		return greaterBlob;
+	}
+	
+	private ImagePlus getSubImage(ImagePlus imp, Blob greaterBlob) {
+		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);
+		
+		int width = image_grill.getWidth();
+		int height = image_grill.getHeight();
+		
+		Point2D center = greaterBlob.getCenterOfGravity();
+		int w = (int) (center.getX() - width/2);
+		int h = (int) (center.getY() - height/2);
+		ImageProcessor ipsub = imp.getProcessor().createProcessor(width, height);
+		ImageProcessor ip = imp.getProcessor();
+		
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				int val = ip.getPixel(w + i,h + j);
+				ipsub.putPixel(i, j, val);
+			}
+		}
+		System.out.println(center);
+		System.out.println(width);
+		System.out.println(height);
+		imp.setProcessor(ipsub);
+		return imp;
+		
+	}
+
+	private void findSymboles(ImagePlus imp) {
 		ManyBlobs manyBlobs = new ManyBlobs(imp);
 		manyBlobs.findConnectedComponents();
 		joueur1 = new ArrayList<>();
@@ -122,9 +163,6 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		manyBlobs = manyBlobs.filterBlobs(20, Blob.GETPERIMETER);
 
-		System.out.println(manyBlobs.size());
-
-		Blob greaterBlob = manyBlobs.get(0);
 		manyBlobs.sort(new Comparator<Blob>() {
 			@Override
 			public int compare(Blob b1, Blob b2) {
@@ -133,9 +171,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 			}
 		});
 
-		greaterBlob = manyBlobs.get(manyBlobs.size() - 1);
-
-		manyBlobs.remove(greaterBlob);
+		manyBlobs.remove(manyBlobs.size()-1);
 		Map<Blob, GFD> gfds = new HashMap<>();
 		for (Blob blob : manyBlobs) {
 			gfds.put(blob, new GFD(Blob.generateBlobImage(blob).getProcessor()));
@@ -180,8 +216,6 @@ public class Morpion<T extends RealType<T>> implements Command {
 //		}		
 			joueur1 = arr.get(0);
 			joueur2 = arr.get(1);
-
-		return greaterBlob;
 	}
 
 	private static ArrayList<ManyBlobs> jenksNaturalBreakByThinnesRatio(ManyBlobs mb) {
