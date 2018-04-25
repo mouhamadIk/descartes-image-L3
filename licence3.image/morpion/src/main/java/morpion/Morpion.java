@@ -71,7 +71,6 @@ public class Morpion<T extends RealType<T>> implements Command {
 		ImagePlus image_convolved = convolve(dupli.run(image_skeletonized));
 
 		image_convolved.getProcessor().threshold(127);		
-		System.out.println(joueur1.size() + "   " + joueur2.size());
 		MorpionGame game = new MorpionGame(joueur1, joueur2, unknown, image_convolved);
 		
 		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);

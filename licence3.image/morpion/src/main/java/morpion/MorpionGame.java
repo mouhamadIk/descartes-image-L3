@@ -56,7 +56,8 @@ public class MorpionGame {
 		}
 		this.img = img;
 		try {
-			fis.write((img.getTitle() + ";").getBytes());
+			String s = img.getTitle().replaceAll("DUP_", "");
+			fis.write(("\n"+ s + ";").getBytes());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,6 +133,7 @@ public class MorpionGame {
 			break;
 		case ERROR:
 			s = "ERROR;";
+		
 			break;
 		case EMPTY:
 			s = "EMPTY;";
@@ -144,7 +146,7 @@ public class MorpionGame {
 			break;
 		}
 		try {
-			fis.write((s+"\n").getBytes());
+			fis.write((s).getBytes());
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
