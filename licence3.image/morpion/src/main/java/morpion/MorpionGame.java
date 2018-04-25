@@ -1,14 +1,19 @@
 package morpion;
 
 import java.awt.geom.Point2D;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import ij.ImagePlus;
 import ij.blob.Blob;
-import scala.xml.dtd.EMPTY;
+
 
 public class MorpionGame {
-
+	private static FileOutputStream fis;
+	
 	public enum State {
 		NOUGHT_WIN, CROSS_WIN, DRAW, ERROR, EMPTY, NOT_END;
 	}
@@ -27,10 +32,50 @@ public class MorpionGame {
 	private Symbol[][] gameBoard = new Symbol[ROWS][COLS];
 
 	MorpionGame(ArrayList<Blob> player1, ArrayList<Blob> player2, ArrayList<Blob> unknown, ImagePlus img) {
+		String adresse = this.getClass().getClassLoader().getResource("").toString();
+
+		// if (OS.isWindows()) {
+		adresse = adresse.substring(6, adresse.length() - 4);
+		// } else {
+		// adresse = adresse.substring(5, adresse.length());
+		// }
+		adresse = adresse.replace("licence3.image/convolution/target/classes/", "");
+		File f = new File(adresse + "resultat.csv");
+		if (!f.exists()) {
+			adresse = this.getClass().getClassLoader().getResource("").toString();
+			adresse = adresse.substring(5, adresse.length());
+		}
+		adresse = adresse.replace("licence3.image/launchImageJ/target/classes/", "");
+		f = new File(adresse + "resultat.csv");
+		System.out.println("Adresse CSV : " + adresse + "resultat.csv");
+		try {
+			fis = new FileOutputStream(f, true);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.img = img;
+		try {
+			fis.write((img.getTitle() + ";").getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println(img.getHeight() + " " + img.getWidth());
 		noughtNumber = player1.size();
+		try {
+			fis.write((noughtNumber + ";").getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		crossNumber = player2.size();
+		try {
+			fis.write((crossNumber + ";").getBytes());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (player1 != null) {
 			for (Blob b : player1) {
 				int position = getPositionInMorpion(b.getCenterOfGravity());
@@ -38,6 +83,7 @@ public class MorpionGame {
 				System.out.print("coord : " + b.getCenterOfGravity() + ", position = " + position + " ~ ["
 						+ position % 3 + "][" + position / 3 + "], circ=" + b.getThinnesRatio());
 				printCell(Symbol.NOUGHT);
+
 				System.out.println();
 			}
 		}
@@ -72,6 +118,38 @@ public class MorpionGame {
 		}
 
 		gameState = getGameState();
+		String s = "";
+		switch (gameState) {
+
+		case NOUGHT_WIN:
+			s = "NOUGHT WIN;";
+			break;
+		case CROSS_WIN:
+			s = "CROSS WIN;";
+			break;
+		case DRAW:
+			s = "DRAW;";
+			break;
+		case ERROR:
+			s = "ERROR;";
+			break;
+		case EMPTY:
+			s = "EMPTY;";
+			break;
+		case NOT_END:
+			s = "NOT END;";
+			break;
+		default:
+			s = "?;";
+			break;
+		}
+		try {
+			fis.write((s+"\n").getBytes());
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void setGameBoard(Symbol[][] gameBoard) {
@@ -153,11 +231,23 @@ public class MorpionGame {
 				printCell(gameBoard[row][col]); // print each of the cells
 				if (col != COLS - 1) {
 					System.out.print("│"); // print vertical partition
+					try {
+						fis.write((";").getBytes());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 			System.out.println();
 			if (row != ROWS - 1) {
 				System.out.println("╌╌╌┼╌╌╌┼╌╌╌"); // print horizontal partition
+				try {
+					fis.write(("\n;;;;").getBytes());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 		System.out.println();
@@ -185,25 +275,67 @@ public class MorpionGame {
 			System.out.println("Game is not coherent.");
 			break;
 		}
+//		try {
+//			fis.write(("\n;;;;").getBytes());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	/** Print a cell with the specified "content" */
 	public static void printCell(Symbol content) {
+		String s;
 		switch (content) {
 		case EMPTY:
+			 s = (" . ");
 			System.out.print("   ");
+			try {
+				fis.write(s.getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		case NOUGHT:
-			System.out.print(" O ");
+			s = " O ";
+			System.out.print(s);
+			try {
+				fis.write(s.getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		case CROSS:
-			System.out.print(" X ");
+			s = " X ";
+			System.out.print(s);
+			try {
+				fis.write(s.getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		case UNKNOWN:
-			System.out.print(" * ");
+			s = " * ";
+			System.out.print(s);
+			try {
+				fis.write(s.getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		default:
-			System.out.print("   ");
+			s = "   ";
+			System.out.print(s);
+			try {
+				fis.write(s.getBytes());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		}
 	}
