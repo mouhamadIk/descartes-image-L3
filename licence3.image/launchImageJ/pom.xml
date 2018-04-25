@@ -102,46 +102,6 @@
 
 		<dependency>
 			<groupId>fr.parisdescartes</groupId>
-			<artifactId>gradient</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>fr.parisdescartes</groupId>
-			<artifactId>drawLines</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>fr.parisdescartes</groupId>
-			<artifactId>histogram</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>fr.parisdescartes</groupId>
-			<artifactId>thresholding</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>fr.parisdescartes</groupId>
-			<artifactId>projection</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>fr.parisdescartes</groupId>
-			<artifactId>convolution</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>fr.parisdescartes</groupId>
-			<artifactId>conversion</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>fr.parisdescartes</groupId>
-			<artifactId>morphology</artifactId>
-			<version>0.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>fr.parisdescartes</groupId>
 			<artifactId>morpion</artifactId>
 			<version>0.0.1</version>
 		</dependency>
