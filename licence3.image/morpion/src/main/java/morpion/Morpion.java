@@ -44,7 +44,10 @@ public class Morpion<T extends RealType<T>> implements Command {
 	Dataset inputImage;
 
 	@Parameter(type = ItemIO.OUTPUT)
-	ImagePlus output;
+	ImagePlus output1;
+	
+	@Parameter(type = ItemIO.OUTPUT)
+	ImagePlus output2;
 
 	@Override
 	public void run() {
@@ -71,9 +74,12 @@ public class Morpion<T extends RealType<T>> implements Command {
 		image_convolved.getProcessor().threshold(127);		
 
 		MorpionGame game = new MorpionGame(joueur1, joueur2, unknown, image_convolved);
+		
+		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);
 
 		game.printBoard();
-		output = imp;
+		output1 = image_grill;
+		output2 = imp;
 	}
 
 	private ImagePlus convertInputToImagePlus() {
