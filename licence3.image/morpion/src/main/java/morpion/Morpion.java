@@ -4,7 +4,6 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.scijava.ItemIO;
@@ -69,7 +68,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 		ImagePlus image_convolved = convolve(dupli.run(image_skeletonized));
 
 		image_convolved.getProcessor().threshold(127);		
-
+		System.out.println(joueur1.size() + "   " + joueur2.size());
 		MorpionGame game = new MorpionGame(joueur1, joueur2, unknown, image_convolved);
 
 		game.printBoard();
@@ -181,7 +180,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 		// }
 		//
 		// }
-		GFD g = gfds.get(manyBlobs.get(manyBlobs.size() - 1));
+//		GFD g = gfds.get(manyBlobs.get(manyBlobs.size() - 1));
 
 		// Sort by Thinnes Ratio
 		manyBlobs.sort(new Comparator<Blob>() {
@@ -252,6 +251,7 @@ public class Morpion<T extends RealType<T>> implements Command {
 		return meanThinnesRatio;
 	}
 
+	@SuppressWarnings("unused")
 	private ImagePlus getLines(ImagePlus imp) {
 		ByteProcessor pr = (ByteProcessor) imp.getProcessor().convertToByte(true);
 		int[] kernel = { 1, 0, -1, 2, 0, -2, 1, 0, -1 };
