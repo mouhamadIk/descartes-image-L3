@@ -37,18 +37,6 @@ public class Morpion<T extends RealType<T>> implements Command {
 	@Parameter
 	OpService ops;
 
-	// @Parameter(persist = false)
-	// ImgPlus<T> image;
-
-	// @Parameter(required = false)
-	// int threshold = 80;
-
-	// @Parameter(type = ItemIO.INPUT)
-	// private ImgPlus<T> img;
-
-	// @Parameter(type = ItemIO.OUTPUT)
-	// ImgPlus<T> imageConv;
-
 	@Parameter
 	ConvertService conv;
 
@@ -82,12 +70,10 @@ public class Morpion<T extends RealType<T>> implements Command {
 
 		image_convolved.getProcessor().threshold(127);		
 
-		ImagePlus image_grill = Blob.generateBlobImage(greaterBlob);
-
 		MorpionGame game = new MorpionGame(joueur1, joueur2, unknown, image_convolved);
 
 		game.printBoard();
-		output = image_grill;
+		output = imp;
 	}
 
 	private ImagePlus convertInputToImagePlus() {
@@ -147,9 +133,6 @@ public class Morpion<T extends RealType<T>> implements Command {
 				ipsub.putPixel(i, j, val);
 			}
 		}
-		System.out.println(center);
-		System.out.println(width);
-		System.out.println(height);
 		imp.setProcessor(ipsub);
 		return imp;
 		
