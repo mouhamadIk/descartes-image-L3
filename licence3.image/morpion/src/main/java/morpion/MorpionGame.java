@@ -26,24 +26,40 @@ public class MorpionGame {
 	private State gameState;
 	private Symbol[][] gameBoard = new Symbol[ROWS][COLS];
 
-	MorpionGame(ArrayList<Blob> player1, ArrayList<Blob> player2, ImagePlus img) {
+	MorpionGame(ArrayList<Blob> player1, ArrayList<Blob> player2, ArrayList<Blob> unknown, ImagePlus img) {
 		this.img = img;
-		System.out.println(img.getHeight() +" " + img.getWidth());
+		System.out.println(img.getHeight() + " " + img.getWidth());
 		noughtNumber = player1.size();
 		crossNumber = player2.size();
-		for (Blob b : player1) {
-			int position = getPositionInMorpion(b.getCenterOfGravity());
-			gameBoard[position / 3][position % 3] = Symbol.NOUGHT;
-			System.out.print("coord : " + b.getCenterOfGravity() + ", position = " + position + " ~ [" + position%3 + "][" + position/3 +"]" );
-			printCell(Symbol.NOUGHT);
-			System.out.println();
+		if (player1 != null) {
+			for (Blob b : player1) {
+				int position = getPositionInMorpion(b.getCenterOfGravity());
+				gameBoard[position / 3][position % 3] = Symbol.NOUGHT;
+				System.out.print("coord : " + b.getCenterOfGravity() + ", position = " + position + " ~ ["
+						+ position % 3 + "][" + position / 3 + "], circ=" + b.getThinnesRatio());
+				printCell(Symbol.NOUGHT);
+				System.out.println();
+			}
 		}
-		for (Blob b : player2) {
-			int position = getPositionInMorpion(b.getCenterOfGravity());
-			System.out.print("coord : " + b.getCenterOfGravity() + ", position = " + position + " ~ [" + position%3 + "][" + position/3 +"]" );
-			printCell(Symbol.CROSS);
-			System.out.println();
-			gameBoard[position / 3][position % 3] = Symbol.CROSS;
+		if (player2 != null) {
+			for (Blob b : player2) {
+				int position = getPositionInMorpion(b.getCenterOfGravity());
+				System.out.print("coord : " + b.getCenterOfGravity() + ", position = " + position + " ~ ["
+						+ position % 3 + "][" + position / 3 + "], circ=" + b.getThinnesRatio());
+				printCell(Symbol.CROSS);
+				System.out.println();
+				gameBoard[position / 3][position % 3] = Symbol.CROSS;
+			}
+		}
+		if (unknown != null) {
+			for (Blob b : unknown) {
+				int position = getPositionInMorpion(b.getCenterOfGravity());
+				System.out.print("coord : " + b.getCenterOfGravity() + ", position = " + position + " ~ ["
+						+ position % 3 + "][" + position / 3 + "], circ=" + b.getThinnesRatio());
+				printCell(Symbol.UNKNOWN);
+				System.out.println();
+				gameBoard[position / 3][position % 3] = Symbol.UNKNOWN;
+			}
 		}
 
 		for (int i = 0; i < 3; i++) {
@@ -119,21 +135,15 @@ public class MorpionGame {
 
 	/**
 	 * 
-	 * 0 | 1 | 2 
-	 * ----------- 
-	 * 3 | 4 | 5 
-	 * -----------
-	 *  6 | 7 | 8
+	 * 0 | 1 | 2 ----------- 3 | 4 | 5 ----------- 6 | 7 | 8
 	 * 
 	 */
-
-
 
 	private int getPositionInMorpion(Point2D p) {
 		int h = img.getHeight();
 		int w = img.getWidth();
-		
-		return (int) (3 * p.getX() / w) +3*(int)(p.getY() / (h/3));
+
+		return (int) (3 * p.getX() / w) + 3 * (int) (p.getY() / (h / 3));
 	}
 
 	public void printBoard() {
@@ -188,6 +198,9 @@ public class MorpionGame {
 			break;
 		case CROSS:
 			System.out.print(" X ");
+			break;
+		case UNKNOWN:
+			System.out.print(" * ");
 			break;
 		default:
 			System.out.print("   ");
